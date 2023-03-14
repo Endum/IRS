@@ -42,7 +42,7 @@ function step()
 		end
 	end
 	--[[ Apply rules upper described ]]--
-	if best_id == 1 or best_id == 24 or (left == 0 and right == 0) then
+	if best_id == 2 or best_id == 23 or (left == 0 and right == 0) then
 		robot.wheels.set_velocity(MAX_VEL, MAX_VEL)
 	else
 		if left > right then
