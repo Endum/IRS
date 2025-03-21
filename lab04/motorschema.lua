@@ -55,7 +55,7 @@ end
 function subs.randomWalk(robot)
     rndvel = MAX_VEL
     v, p_id = getHigherProximityWithIdx(robot)
-    v, l_id = getHigherProximityWithIdx(robot)
+    v, l_id = getHigherLuminosityWithIdx(robot)
     if p_id or l_id then
         rndvel = 0
     end

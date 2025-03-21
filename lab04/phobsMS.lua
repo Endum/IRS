@@ -26,11 +26,14 @@ function step()
 		pol = vector.vec2_polar_sum(pol, schema(robot))
 	end
 
+	--[[ Normalize velocity ]]--
+	pol = vector.vec2_polar(MAX_VEL, pol.angle)
+
 	--[[ Translate from polar vector to wheel velocities. ]]--
 	vel = vector.polar_to_vel(pol, L)
 
 	--[[ Apply calculated velocities. ]]--
-	robot.wheels.set_velocity(math.min(vel.vl, MAX_VEL), math.min(vel.vr, MAX_VEL))
+	robot.wheels.set_velocity(vel.vl, vel.vr)
 end
 
 
