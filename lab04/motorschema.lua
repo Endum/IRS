@@ -6,6 +6,7 @@
 local vector = require "vector"
 local MAX_VEL = 15
 local VAL_MULT = 1
+local VAL_DIV = 10
 
 --[[ Local utilities ]]--
 function randomFloat(lower, greater)
@@ -71,8 +72,19 @@ function subs.lightField(robot)
         lpol = vector.vec2_polar_sum(lpol, vector.vec2_polar(robot.light[i].value * VAL_MULT, robot.light[i].angle))
     end
 
+    --[[ Divide if obstacle detected. ]]--
+    DIVI = 1
+    opol = subs.obstacleField(robot)
+    if opol.length > 0 then
+        DIVI = VAL_DIV
+    end
+
     --[[ Return fixed length pol. ]]--
-    return vector.vec2_polar(MAX_VEL, lpol.angle)
+    if lpol.length > 0 then
+        return vector.vec2_polar(MAX_VEL/DIVI, lpol.angle)
+    else
+        return vector.vec2_polar(0, lpol.angle)
+    end
 end
 
 --[[ Repulsive obstacle field ]]--
@@ -94,7 +106,11 @@ function subs.obstacleField(robot)
     end
 
     --[[ Return fixed length pol. ]]--
-    return vector.vec2_polar(MAX_VEL, opol.angle)
+    if opol.length > 0 then
+        return vector.vec2_polar(MAX_VEL, opol.angle)
+    else
+        return vector.vec2_polar(0, opol.angle)
+    end
 end
 
 --[[ Safe stop near light ]]--
